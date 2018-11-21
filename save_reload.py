@@ -10,12 +10,13 @@ def save():
         torch.nn.ReLU(),
         torch.nn.Linear(10, 1),
     )
-    optimizer = torch.optm.SGD(net1.parameters(), lr=0.1)
+    optimizer = torch.optim.SGD(net1.parameters(), lr=0.5)
     loss_func = torch.nn.MSELoss()
-    for i in range(100):
+    for i in range(1000):
         prediction = net1(x)
         loss = loss_func(prediction, y)
         optimizer.zero_grad()
+        loss.backward()
         optimizer.step()
 
     plt.figure(1, figsize=(10, 3))
