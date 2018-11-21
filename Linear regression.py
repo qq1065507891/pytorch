@@ -3,7 +3,7 @@ from torch.autograd import Variable
 import torch.nn.functional as F
 import matplotlib.pyplot as plt
 
-x = torch.unsuqueeze(torch.linspace(-1, 1, 200))
+x = torch.unsqueeze(torch.linspace(-1, 1, 100), dim=1)
 y = x.pow(2) + 0.2*torch.rand(x.size())
 
 plt.scatter(x.data.numpy(), y.data.numpy())
@@ -25,8 +25,8 @@ print(net)
 
 plt.ion() # 实时更新图
 
-optimizer = torch.optm.SGD(net.parameters(), lr=0.1)
-loss_func = torch.nn.MESLoss() # 均方差损失函数
+optimizer = torch.optim.SGD(net.parameters(), lr=0.1)
+loss_func = torch.nn.MSELoss() # 均方差损失函数
 
 for i in range(100):
     prediction = net(x)
@@ -40,7 +40,7 @@ for i in range(100):
         plt.cla()
         plt.scatter(x.data.numpy(), y.data.numpy())
         plt.plot(x.data.numpy(), prediction.data.numpy(), 'r-', lw=5)
-        plt.text(0.5, 0, 'Loss=%.4f' % loss.data[0], fontdict={'size': 20, 'color':  'red'})
+        plt.text(0.5, 0, 'Loss=%.4f' % loss.data.numpy(), fontdict={'size': 20, 'color':  'red'})
         plt.pause(0.1)
 
 plt.ioff()
